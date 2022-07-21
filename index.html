@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button class="btns" id="rock">ROCK</button>
+    <button class="btns" id="paper">PAPER</button>
+    <button class="btns" id="scissor">SCISSOR</button>
+    <div>
+        <p class="playerscore">Player Score: </p>
+        <p class="computerscore">Computer Score: </p>
+        <p class="result"></p>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        let playerScore = 0;
+        let computerScore = 0;
+
+
+        const pselect = document.querySelectorAll('.btns').forEach(
+            pselect => pselect.addEventListener("click", () => game(pselect.id))
+        )
+        const results = document.querySelector('.result')
+        const pscore = document.querySelector('.playerscore')
+        const cscore = document.querySelector('.computerscore')
+
+
+
+        function computerTurn() {
+            let computerChoice = Math.floor(Math.random() * 3);
+            if (computerChoice == 0) {
+                return "rock";
+            } else if (computerChoice == 1) {
+                return "paper";
+            } else {
+                return "scissor";
+            }
+        }
+
+
+        function result(computerChoice, playerChoice) {
+            if (computerChoice == "rock" && playerChoice == "rock") {
+                return "draw"
+            } else if (computerChoice == "rock" && playerChoice == "paper") {
+                return "player win"
+            } else if (computerChoice == "rock" && playerChoice == "scissor") {
+                return "player lost"
+            } else if (computerChoice == "paper" && playerChoice == "rock") {
+                return "player lost"
+            } else if (computerChoice == "paper" && playerChoice == "paper") {
+                return "draw"
+            } else if (computerChoice == "paper" && playerChoice == "scissor") {
+                return "player win"
+            } else if (computerChoice == "scissor" && playerChoice == "rock") {
+                return "player win"
+            } else if (computerChoice == "scissor" && playerChoice == "paper") {
+                return "player lost"
+            } else if (computerChoice == "scissor" && playerChoice == "scissor") {
+                return "draw"
+            } else {
+                return "unknown input"
+            }
+
+
+        }
+
+
+        function game(playerSelection) {
+
+            b = playerSelection
+            a = computerTurn();
+
+            if (result(a, b) == "player win") {
+                playerScore += 1;
+                results.textContent = `u chose ${b}, the computer chose ${a}`
+                pscore.textContent = `Player Score: ${playerScore}`
+                cscore.textContent = `Computer Score: ${computerScore}`
+            } else if (result(a, b) == "player lost") {
+                computerScore += 1;
+                pscore.textContent = `Player Score: ${playerScore}`
+                cscore.textContent = `Computer Score: ${computerScore}`
+                results.textContent = `u chose ${b}, the computer chose ${a}`
+            } else if (result(a, b) == "draw") {
+                pscore.textContent = `Player Score: ${playerScore}`
+                cscore.textContent = `Computer Score: ${computerScore}`
+                results.textContent = `u chose ${b}, the computer chose ${a}`
+            }
+            if (playerScore == 5) {
+                results.textContent = `YOU WON`
+                const pselect = document.querySelectorAll('.btns').forEach(
+                    pselect => pselect.disabled = true)
+
+            } else if (computerScore == 5) {
+                results.textContent = `COMPUTER WON`
+                const pselect = document.querySelectorAll('.btns').forEach(
+                    pselect => pselect.disabled = true)
+            } else if (playerScore == 5 && computerScore == 5) {
+                results.textContent = 'DRAW';
+                const pselect = document.querySelectorAll('.btns').forEach(
+                    pselect => pselect.disabled = true)
+            }
+
+        }
+
+    </script>
+</body>
+
+</html>
